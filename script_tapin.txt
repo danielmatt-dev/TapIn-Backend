@@ -1,0 +1,64 @@
+create table alertas (
+    id_alerta serial not null primary key,
+    titulo character varying(100) not null,
+    descripcion character varying(255) not null,
+    tipo character varying not null check ( tipo in ('Alerta', 'Notificación') ),
+    estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
+);
+
+create table alumnos (
+    id_alumno character varying primary key not null,
+    nombre_completo character varying not null,
+    curp character varying(50) not null,
+    sexo character varying(20) not null,
+    correo_institucional character varying not null,
+    fecha_nacimiento date not null,
+    telefono_tutor character varying,
+    es_silenciado bool not null,
+    estado character varying(10) not null check ( estado in ('Activo', 'Baja') )
+);
+
+create table nfc (
+    id_nfc serial not null primary key,
+    identificador character varying not null,
+    id_alumno character varying not null references alumnos(id_alumno),
+    estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
+);
+
+create table periodos (
+    id_periodo character varying primary key not null,
+    nombre character varying not null,
+    hora_entrada time not null,
+    hora_salida time not null,
+    fecha_inicio date not null,
+    fecha_final date not null,
+    estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
+);
+
+create table inscripciones (
+    id_inscripcion character varying primary key not null,
+    id_alumno character varying references alumnos(id_alumno),
+    id_periodo character varying references periodos(id_periodo),
+    fecha timestamp not null,
+    grado character varying(5),
+    grupo character varying(5),
+    estado character varying(10) not null check ( estado in ('Activo', 'Baja') )
+);
+
+create table bloques (
+    id_bloque character varying primary key not null,
+    id_periodo character varying references periodos(id_periodo) not null,
+    nombre character varying not null,
+    meses character varying,
+    estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
+);
+
+create table registro_asistencias (
+    id_registro_asistencia serial not null primary key,
+    id_alumno character varying references alumnos(id_alumno),
+    fecha date not null,
+    hora time not null,
+    tipo_registro character varying not null check ( tipo_registro in ('Normal', 'Justificada', 'Extraordinario', 'Tardío') ),
+    tipo_acceso character varying not null check ( tipo_acceso in ('Entrada', 'Salida') ),
+    estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
+);
