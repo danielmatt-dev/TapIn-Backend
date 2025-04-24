@@ -4,13 +4,14 @@ from rest_framework import status
 
 from alumnos.infrastructure.serializers import AlumnoSerializer
 from alumnos.application.use_cases.registrar_alumno import registrar_alumno
-from alumnos.infrastructure.repositories import AlumnoRepositoryImpl
+
 
 @api_view(['POST'])
-def registrar_alumno_view(request):
+def registrar_alumno_view(request, registrar_alumno):
     serializer = AlumnoSerializer(data=request.data)
-    if serializer.is_valid():
-        repo = AlumnoRepositoryImpl()  
-        alumno = registrar_alumno(serializer.validated_data, repo)
-        return Response(AlumnoSerializer(alumno).data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    alumno = registrar_alumno.execute(serializer.validated_data)
+    return Response(AlumnoSerializer(alumno).data, status=status.HTTP_201_CREATED)
