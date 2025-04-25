@@ -1,6 +1,6 @@
 from django.urls import path
-from alumnos.infrastructure.views import registrar_alumno_view
+from views_factory import registrar_alumno_view_factory
 
 urlpatterns = [
-    path('registrar/', registrar_alumno_view),
+    path('registrar/', registrar_alumno_view_factory),
 ]

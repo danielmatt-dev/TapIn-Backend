@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from alumnos.domain.models import Alumnos
+from alumnos.infrastructure.alumno_model import AlumnoModel
 
 class AlumnoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Alumnos
+        model = AlumnoModel
         fields = '__all__'
