@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+api_path = 'scolaris'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('alumnos/', include('alumnos.infrastructure.urls'))
+    path(f'{api_path}/', include('alumnos.infrastructure.urls'))
 ]
