@@ -18,9 +18,9 @@ class InjectorModule(Module):
     @singleton
     @provider
     def provide_alumno_repository(self) -> AlumnoRepository:
-        return AlumnoRepositoryImpl(self.provide_mapper)
+        return AlumnoRepositoryImpl(self.provide_mapper())
 
     @singleton
     @provider
     def provide_registrar_alumo(self) -> RegistrarAlumno:
-        return RegistrarAlumnoImpl(self.provide_alumno_repository)
+        return RegistrarAlumnoImpl(repository=self.provide_alumno_repository(), mapper=self.provide_mapper())

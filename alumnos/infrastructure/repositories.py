@@ -13,8 +13,9 @@ class AlumnoRepositoryImpl(AlumnoRepository):
         self._mapper = mapper
 
     def registrar(self, alumno: Alumno) -> Alumno:
-        model = self._mapper.toModel(alumno)
-        return self._mapper.toDomain(AlumnoModel.objects.create(model))
+        model = self._mapper.to_model(alumno)
+        model.save()
+        return self._mapper.to_domain(model)
 
     def obtener_por_correo(self, correo: str) -> Alumno:
         return AlumnoModel.objects.filter(correo_institucional=correo).first()

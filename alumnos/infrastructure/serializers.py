@@ -1,7 +1,11 @@
 from rest_framework import serializers
-from alumnos.infrastructure.alumno_model import AlumnoModel
 
-class AlumnoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AlumnoModel
-        fields = '__all__'
+
+class AlumnoSerializer(serializers.Serializer):
+    id_alumno = serializers.CharField()
+    nombre_completo = serializers.CharField()
+    curp = serializers.CharField()
+    sexo = serializers.CharField()
+    correo_institucional = serializers.EmailField()
+    fecha_nacimiento = serializers.DateField()
+    telefono_tutor = serializers.CharField()

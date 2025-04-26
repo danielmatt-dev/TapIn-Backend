@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 
-from alumnos.domain.alumno import Alumno
+from alumnos.domain.dtos import AlumnoDTO
 
 
 class RegistrarAlumno(ABC):
 
     @abstractmethod
-    def execute(self, dto: any) -> Alumno:
+    def execute(self, dto: AlumnoDTO) -> AlumnoDTO:
         pass
 
 
