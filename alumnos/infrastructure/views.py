@@ -1,12 +1,12 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
+from django.views.decorators.csrf import csrf_exempt
 from alumnos.application.use_cases.use_cases import RegistrarAlumno
 from alumnos.domain.dtos import AlumnoDTO
 from alumnos.infrastructure.serializers import AlumnoSerializer
 
-
+@csrf_exempt
 @api_view(['POST'])
 def registrar_alumno_view(request, registrar_alumno: RegistrarAlumno):
     alumno_serializer = AlumnoSerializer(data=request.data)
