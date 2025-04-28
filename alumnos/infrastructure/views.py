@@ -1,4 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
+from oauth2_provider.decorators import protected_resource
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,6 +11,7 @@ from alumnos.infrastructure.serializers import AlumnoSerializer
 
 @csrf_exempt
 @api_view(['POST'])
+@protected_resource()
 def registrar_alumno_view(request, registrar_alumno: RegistrarAlumno):
     alumno_serializer = AlumnoSerializer(data=request.data)
 

@@ -5,6 +5,10 @@ django-getenv
 djangorestframework-simplejwt==5.3.0
 psycopg2-binary
 injector==0.21.0
-python-dotenv
+python-dotenv~=1.1.0
 pandas
 openpyxl
+django-oauth-toolkit==3.0.1
+requests~=2.32.3
+django-allauth
+dj_rest_auth
