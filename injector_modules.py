@@ -5,10 +5,11 @@ from alumnos.domain.ports import AlumnoRepository
 from alumnos.infrastructure.mapper.alumno_mapper import AlumnoMapper
 from alumnos.infrastructure.mapper.alumno_mapper_impl import AlumnoMapperImpl
 from alumnos.infrastructure.repositories import AlumnoRepositoryImpl
-from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, ConsultarEstadoAlumnos
+from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, ConsultarEstadoAlumnos, ActualizarAlumno
 from alumnos.application.use_cases.impl.silenciar_alumno_impl import SilenciarAlumnoImpl
 from alumnos.application.use_cases.impl.eliminar_alumno_impl import EliminarAlumnoImpl
 from alumnos.application.use_cases.impl.consultar_estado_alumnos_impl import ConsultarEstadoAlumnosImpl
+from alumnos.application.use_cases.impl.actualizar_alumnos_impl import ActualizarAlumnoImpl
 
 
 class InjectorModule(Module):
@@ -45,3 +46,11 @@ class InjectorModule(Module):
         repository=self.provide_alumno_repository(),
         mapper=self.provide_mapper()
     )
+    
+    @singleton
+    @provider
+    def provide_actualizar_alumno(self) -> ActualizarAlumno:
+        return ActualizarAlumnoImpl(
+            repository=self.provide_alumno_repository(),
+            mapper=self.provide_mapper()
+        )

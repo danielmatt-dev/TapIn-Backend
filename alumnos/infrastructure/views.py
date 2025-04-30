@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, ConsultarEstadoAlumnos
+from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, ConsultarEstadoAlumnos, ActualizarAlumno
 from alumnos.domain.dtos import AlumnoDTO
 from alumnos.infrastructure.serializers import AlumnoSerializer
 
@@ -63,3 +63,22 @@ def consultar_estado_alumnos_view(request, consultar_estado_alumnos: ConsultarEs
     alumnos_data = [a.__dict__ for a in alumnos]
 
     return Response(alumnos_data, status=status.HTTP_200_OK)
+
+@csrf_exempt
+@api_view(['PUT'])
+def actualizar_alumno_view(request, actualizar_alumno: ActualizarAlumno):
+    serializer = AlumnoSerializer(data=request.data)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    dto = AlumnoDTO(
+        id_alumno=serializer.validated_data['id_alumno'],
+        nombre_completo=serializer.validated_data['nombre_completo'],
+        curp=serializer.validated_data['curp'],
+        sexo=serializer.validated_data['sexo'],
+        correo_institucional=serializer.validated_data['correo_institucional'],
+        fecha_nacimiento=serializer.validated_data['fecha_nacimiento'],
+        telefono_tutor=serializer.validated_data['telefono_tutor'],
+    )
+    updated = actualizar_alumno.execute(dto)
+    return Response(AlumnoSerializer(updated).data, status=status.HTTP_200_OK)

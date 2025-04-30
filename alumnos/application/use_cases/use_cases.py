@@ -28,3 +28,9 @@ class ConsultarEstadoAlumnos(ABC):
     @abstractmethod
     def execute(self) -> List[AlumnoDTO]:
         pass
+
+class ActualizarAlumno(ABC):
+
+    @abstractmethod
+    def execute(self, dto: AlumnoDTO) -> AlumnoDTO:
+        pass
