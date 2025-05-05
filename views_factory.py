@@ -6,13 +6,15 @@ from alumnos.application.use_cases.use_cases import (
     RegistrarAlumno,
     SilenciarAlumno,
     EliminarAlumno,
-    ConsultarEstadoAlumnos
+    ConsultarEstadoAlumnos,
+    ActualizarAlumno
 )
 from alumnos.infrastructure.views import (
     registrar_alumno_view,
     silenciar_alumno_view,
     eliminar_alumno_view,
-    consultar_estado_alumnos_view
+    consultar_estado_alumnos_view,
+    actualizar_alumno_view
 )
 from injector_modules import InjectorModule
 
@@ -43,3 +45,9 @@ def consultar_estado_alumnos_view_factory(request) -> Response:
     injector = Injector([InjectorModule])
     consultar_estado_alumnos_use_case = injector.get(ConsultarEstadoAlumnos)
     return consultar_estado_alumnos_view(request, consultar_estado_alumnos_use_case)
+
+@csrf_exempt
+def actualizar_alumno_view_factory(request) -> Response:
+    injector = Injector([InjectorModule])
+    use_case = injector.get(ActualizarAlumno)
+    return actualizar_alumno_view(request, use_case)

@@ -14,7 +14,7 @@ class RegistrarAlumno(ABC):
 class SilenciarAlumno(ABC):
 
     @abstractmethod
-    def execute(self, id_alumno: str) -> bool:
+    def execute(self, id_alumno: str, silenciado: bool) -> bool:
         pass
     
 class EliminarAlumno(ABC):
@@ -27,4 +27,10 @@ class ConsultarEstadoAlumnos(ABC):
 
     @abstractmethod
     def execute(self) -> List[AlumnoDTO]:
+        pass
+
+class ActualizarAlumno(ABC):
+
+    @abstractmethod
+    def execute(self, dto: AlumnoDTO) -> AlumnoDTO:
         pass

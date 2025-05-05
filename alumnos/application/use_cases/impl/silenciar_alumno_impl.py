@@ -9,10 +9,5 @@ class SilenciarAlumnoImpl(SilenciarAlumno):
     def __init__(self, repository: AlumnoRepository):
         self._repository = repository
 
-    def execute(self, id_alumno: str) -> bool:
-        alumno = self._repository.obtener_por_id(id_alumno)
-        if alumno:
-            alumno.es_silenciado = True
-            self._repository.actualizar(alumno)
-            return True
-        return False
+    def execute(self, id_alumno: str, silenciado: bool) -> bool:
+        return self._repository.silenciar(id_alumno, silenciado)

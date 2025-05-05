@@ -24,15 +24,41 @@ class AlumnoRepositoryImpl(AlumnoRepository):
         model = AlumnoModel.objects.filter(id_alumno=id_alumno).first()
         return self._mapper.to_domain(model) if model else None
 
-    def actualizar(self, alumno: Alumno) -> None:
-        model = AlumnoModel.objects.get(id_alumno=alumno.id_alumno)
-        model.es_silenciado = alumno.es_silenciado
-        model.save()
+    def silenciar(self, id_alumno: str, silenciado: bool) -> bool:
+        updated = (
+            AlumnoModel.objects
+            .filter(id_alumno=id_alumno)
+            .update(es_silenciado=silenciado)
+        )
+        return updated == 1
     
     def eliminar(self, id_alumno: str) -> bool:
         deleted, _ = AlumnoModel.objects.filter(id_alumno=id_alumno).delete()
         return bool(deleted)
 
     def obtener_todos(self) -> list:
+        
         models = AlumnoModel.objects.all()
         return [self._mapper.to_domain(model) for model in models]
+    
+    def actualizar(self, alumno: Alumno) -> Alumno:
+        model = AlumnoModel.objects.get(id_alumno=alumno.id_alumno)
+
+        model.nombre_completo      = alumno.nombre_completo
+        model.curp                 = alumno.curp
+        model.sexo                 = alumno.sexo
+        model.correo_institucional = alumno.correo_institucional
+        model.fecha_nacimiento     = alumno.fecha_nacimiento
+        model.telefono_tutor       = alumno.telefono_tutor
+        model.estado               = alumno.estado
+
+        model.save(update_fields=[
+        'nombre_completo',
+        'curp',
+        'sexo',
+        'correo_institucional',
+        'fecha_nacimiento',
+        'telefono_tutor',
+        'estado',
+    ])
+        return self._mapper.to_domain(model)
