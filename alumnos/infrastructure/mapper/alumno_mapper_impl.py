@@ -41,5 +41,7 @@ class AlumnoMapperImpl(AlumnoMapper):
             sexo=domain.sexo,
             correo_institucional=domain.correo_institucional,
             fecha_nacimiento=domain.fecha_nacimiento,
-            telefono_tutor=domain.telefono_tutor
+            telefono_tutor=domain.telefono_tutor,
+            es_silenciado=domain.es_silenciado,
+            estado=domain.estado  
         )

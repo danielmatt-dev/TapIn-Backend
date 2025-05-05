@@ -37,18 +37,28 @@ class AlumnoRepositoryImpl(AlumnoRepository):
         return bool(deleted)
 
     def obtener_todos(self) -> list:
+        
         models = AlumnoModel.objects.all()
         return [self._mapper.to_domain(model) for model in models]
     
     def actualizar(self, alumno: Alumno) -> Alumno:
-        model = self._mapper.to_model(alumno)
+        model = AlumnoModel.objects.get(id_alumno=alumno.id_alumno)
+
+        model.nombre_completo      = alumno.nombre_completo
+        model.curp                 = alumno.curp
+        model.sexo                 = alumno.sexo
+        model.correo_institucional = alumno.correo_institucional
+        model.fecha_nacimiento     = alumno.fecha_nacimiento
+        model.telefono_tutor       = alumno.telefono_tutor
+        model.estado               = alumno.estado
+
         model.save(update_fields=[
-            'nombre_completo',
-            'curp',
-            'sexo',
-            'correo_institucional',
-            'fecha_nacimiento',
-            'telefono_tutor',
-            'estado',
-        ])
+        'nombre_completo',
+        'curp',
+        'sexo',
+        'correo_institucional',
+        'fecha_nacimiento',
+        'telefono_tutor',
+        'estado',
+    ])
         return self._mapper.to_domain(model)

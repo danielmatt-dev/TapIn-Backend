@@ -24,7 +24,7 @@ class RegistrarAlumnoImpl(RegistrarAlumno):
             fecha_nacimiento=dto.fecha_nacimiento,
             telefono_tutor=dto.telefono_tutor,
             es_silenciado=False,
-            estado="Activo"
+            estado=dto.estado
         )
         alumno_registrado = self._repository.registrar(alumno)
 

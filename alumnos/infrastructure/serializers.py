@@ -9,3 +9,5 @@ class AlumnoSerializer(serializers.Serializer):
     correo_institucional = serializers.EmailField()
     fecha_nacimiento = serializers.DateField()
     telefono_tutor = serializers.CharField()
+    es_silenciado = serializers.BooleanField(read_only=True)
+    estado = serializers.ChoiceField(choices=['Activo','Baja'])  

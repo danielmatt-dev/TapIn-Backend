@@ -24,6 +24,7 @@ class ActualizarAlumnoImpl(ActualizarAlumno):
         entidad.correo_institucional  = dto.correo_institucional
         entidad.fecha_nacimiento      = dto.fecha_nacimiento
         entidad.telefono_tutor        = dto.telefono_tutor
+        entidad.estado               = dto.estado 
 
         actualizado = self._repository.actualizar(entidad)
 
