@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     # Domains
     'alumnos',
+    'asistencia',
 
     # OAuth2 provider (django-oauth-toolkit)
     'oauth2_provider',
