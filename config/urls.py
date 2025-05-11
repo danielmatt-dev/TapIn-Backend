@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/auth/social/google/', GoogleLogin.as_view(), name='google_login'),
     path(f'{api_path}/', include('alumnos.infrastructure.urls')),
     path(f'{api_path}/asistencia/', include('asistencia.infrastructure.urls')),
+    path(f'{api_path}/inscripcion/', include('inscripciones.infrastructure.urls')),
 ]
