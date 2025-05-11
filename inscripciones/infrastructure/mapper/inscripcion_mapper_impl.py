@@ -1,7 +1,7 @@
-from inscripciones.infrastructure.mapper.inscripcion_mapper import InscripcionMapper
-from inscripciones.infrastructure.inscripcion_model import InscripcionModel
 from inscripciones.domain.inscripcion import Inscripcion
 from inscripciones.domain.dtos import InscripcionDTO
+from inscripciones.infrastructure.inscripcion_model import InscripcionModel
+from inscripciones.infrastructure.mapper.inscripcion_mapper import InscripcionMapper
 
 class InscripcionMapperImpl(InscripcionMapper):
 
@@ -11,8 +11,8 @@ class InscripcionMapperImpl(InscripcionMapper):
             id_alumno=model.id_alumno,
             id_periodo=model.id_periodo,
             fecha=model.fecha,
-            grado=model.grado,
-            grupo=model.grupo,
+            grado=model.grado or '',
+            grupo=model.grupo or '',
             estado=model.estado
         )
 

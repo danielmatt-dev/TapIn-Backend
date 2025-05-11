@@ -18,14 +18,14 @@ class InscripcionRepositoryImpl(InscripcionRepository):
 
     def buscar_por_alumno(self, id_alumno: str) -> List[Inscripcion]:
         qs = InscripcionModel.objects.filter(id_alumno=id_alumno)
-        return [ self._mapper.to_domain(m) for m in qs ]
+        return [self._mapper.to_domain(m) for m in qs]
 
-    def actualizar_periodo(self, id_inscripcion: str, nuevo_periodo: str) -> bool:
-        updated = InscripcionModel.objects \
-            .filter(id_inscripcion=id_inscripcion) \
-            .update(id_periodo=nuevo_periodo)
+    def actualizar_periodo(self, id_inscripcion: str, id_periodo: str) -> bool:
+        updated = InscripcionModel.objects\
+            .filter(id_inscripcion=id_inscripcion)\
+            .update(id_periodo=id_periodo)
         return updated == 1
 
-    def vaciar_por_periodo(self, id_periodo: str) -> int:
-        deleted, _ = InscripcionModel.objects.filter(id_periodo=id_periodo).delete()
-        return deleted
+    def vaciar(self) -> bool:
+        deleted, _ = InscripcionModel.objects.all().delete()
+        return bool(deleted)

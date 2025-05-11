@@ -1,10 +1,8 @@
 from injector import Injector
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
-
 from inscripciones.application.use_cases.use_cases import (
-    NuevaInscripcion, BuscarInscripciones,
-    ActualizarPeriodo, VaciarInscripciones
+    NuevaInscripcion, BuscarInscripciones, ActualizarPeriodo, VaciarInscripciones
 )
 from inscripciones.infrastructure.views import (
     registrar_inscripcion_view, buscar_inscripciones_view,

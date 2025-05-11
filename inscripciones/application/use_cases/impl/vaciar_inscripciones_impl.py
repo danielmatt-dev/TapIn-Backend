@@ -6,7 +6,7 @@ class VaciarInscripcionesImpl(VaciarInscripciones):
 
     @inject
     def __init__(self, repository: InscripcionRepository):
-        self._repo = repository
+        self._repository = repository
 
-    def execute(self, id_periodo: str) -> int:
-        return self._repo.vaciar_por_periodo(id_periodo)
+    def execute(self) -> bool:
+        return self._repository.vaciar()

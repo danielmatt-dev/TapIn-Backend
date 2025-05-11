@@ -11,7 +11,7 @@ class NuevaInscripcionImpl(NuevaInscripcion):
     def __init__(self,
                  repository: InscripcionRepository,
                  mapper: InscripcionMapper):
-        self._repo   = repository
+        self._repository = repository
         self._mapper = mapper
 
     def execute(self, dto: InscripcionDTO) -> InscripcionDTO:
@@ -24,5 +24,5 @@ class NuevaInscripcionImpl(NuevaInscripcion):
             grupo=dto.grupo,
             estado=dto.estado,
         )
-        creado = self._repo.registrar(entidad)
+        creado = self._repository.registrar(entidad)
         return self._mapper.to_dto(creado)

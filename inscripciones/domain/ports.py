@@ -13,9 +13,9 @@ class InscripcionRepository(ABC):
         pass
 
     @abstractmethod
-    def actualizar_periodo(self, id_inscripcion: str, nuevo_periodo: str) -> bool:
+    def actualizar_periodo(self, id_inscripcion: str, id_periodo: str) -> bool:
         pass
 
     @abstractmethod
-    def vaciar_por_periodo(self, id_periodo: str) -> int:
+    def vaciar(self) -> bool:
         pass

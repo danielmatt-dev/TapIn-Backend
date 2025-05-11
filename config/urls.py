@@ -12,9 +12,6 @@ urlpatterns = [
     path('api/auth/social/google/', GoogleLogin.as_view(), name='google_login'),
     path(f'{api_path}/', include('alumnos.infrastructure.urls')),
     path(f'{api_path}/asistencia/', include('asistencia.infrastructure.urls')),
-<<<<<<< HEAD
     path(f'{api_path}/inscripcion/', include('inscripciones.infrastructure.urls')),
-=======
     path(f'{api_path}/periodos/', include('periodos.infrastructure.urls')),
->>>>>>> develop
 ]

@@ -6,7 +6,7 @@ class ActualizarPeriodoImpl(ActualizarPeriodo):
 
     @inject
     def __init__(self, repository: InscripcionRepository):
-        self._repo = repository
+        self._repository = repository
 
-    def execute(self, id_inscripcion: str, nuevo_periodo: str) -> bool:
-        return self._repo.actualizar_periodo(id_inscripcion, nuevo_periodo)
+    def execute(self, id_inscripcion: str, id_periodo: str) -> bool:
+        return self._repository.actualizar_periodo(id_inscripcion, id_periodo)

@@ -14,10 +14,10 @@ class BuscarInscripciones(ABC):
 
 class ActualizarPeriodo(ABC):
     @abstractmethod
-    def execute(self, id_inscripcion: str, nuevo_periodo: str) -> bool:
+    def execute(self, id_inscripcion: str, id_periodo: str) -> bool:
         pass
 
 class VaciarInscripciones(ABC):
     @abstractmethod
-    def execute(self, id_periodo: str) -> int:
+    def execute(self) -> bool:
         pass

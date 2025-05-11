@@ -50,12 +50,10 @@ INSTALLED_APPS = [
     # Domains
     'alumnos',
     'asistencia',
-<<<<<<< HEAD
-    'inscripciones',
-=======
     'periodos',
+    'inscripciones',
+
     
->>>>>>> develop
 
     # OAuth2 provider (django-oauth-toolkit)
     'oauth2_provider',
