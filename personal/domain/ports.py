@@ -1,0 +1,16 @@
+# ports.py
+from abc import ABC, abstractmethod
+from typing import List
+from personal.domain.personal import Personal
+
+class PersonalRepository(ABC):
+    @abstractmethod
+    def registrar(self, p: Personal) -> Personal: ...
+    @abstractmethod
+    def obtener_por_id(self, id_personal: str) -> Personal | None: ...
+    @abstractmethod
+    def eliminar(self, id_personal: str) -> bool: ...
+    @abstractmethod
+    def obtener_todos(self) -> List[Personal]: ...
+    @abstractmethod
+    def actualizar(self, p: Personal) -> Personal: ...

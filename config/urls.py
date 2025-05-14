@@ -14,4 +14,6 @@ urlpatterns = [
     path(f'{api_path}/asistencia/', include('asistencia.infrastructure.urls')),
     path(f'{api_path}/inscripcion/', include('inscripciones.infrastructure.urls')),
     path(f'{api_path}/periodos/', include('periodos.infrastructure.urls')),
+    path(f'{api_path}/personal/', include('personal.infrastructure.urls')),
+
 ]

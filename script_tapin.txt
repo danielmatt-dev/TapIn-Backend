@@ -62,3 +62,16 @@ create table registro_asistencias (
     tipo_acceso character varying not null check ( tipo_acceso in ('Entrada', 'Salida') ),
     estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
 );
+
+create table personal (
+    id_personal character varying primary key not null,
+    nombre       character varying not null,
+    rol          character varying not null
+                   check (rol in ('Administrativo','Directivo')),
+    departamento character varying not null,
+    correo       character varying not null,
+    estado       character varying not null
+                   check (estado in ('Habilitado','Deshabilitado'))
+);
+
+
