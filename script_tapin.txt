@@ -6,7 +6,7 @@ create table alertas (
     estado character varying not null check ( estado in ('Habilitado', 'Deshabilitado') )
 );
 
-create table alumnos (
+create table alumnos 7
     id_alumno character varying primary key not null,
     nombre_completo character varying not null,
     curp character varying(50) not null,

@@ -16,7 +16,7 @@ from alumnos.infrastructure.views import (
     consultar_estado_alumnos_view,
     actualizar_alumno_view
 )
-from injector_modules import InjectorModule
+from .injector_modules import InjectorModule
 
 
 @csrf_exempt
