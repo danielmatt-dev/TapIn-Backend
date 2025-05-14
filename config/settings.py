@@ -52,8 +52,7 @@ INSTALLED_APPS = [
     'asistencia',
     'periodos',
     'inscripciones',
-
-    
+    'personal',
 
     # OAuth2 provider (django-oauth-toolkit)
     'oauth2_provider',
