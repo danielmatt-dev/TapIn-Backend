@@ -3,6 +3,7 @@ from periodos.domain.dtos import PeriodoDTO
 from periodos.infrastructure.periodo_model import PeriodoModel
 from periodos.infrastructure.mapper.periodo_mapper import PeriodoMapper
 
+
 class PeriodoMapperImpl(PeriodoMapper):
 
     def to_domain(self, model: PeriodoModel) -> Periodo:
@@ -36,4 +37,15 @@ class PeriodoMapperImpl(PeriodoMapper):
             fecha_inicio=domain.fecha_inicio,
             fecha_final=domain.fecha_final,
             estado=domain.estado
+        )
+
+    def to_domain_from_dto(self, dto: PeriodoDTO) -> Periodo:
+        return Periodo(
+            id_periodo=dto.id_periodo,
+            nombre=dto.nombre,
+            hora_entrada=dto.hora_entrada,
+            hora_salida=dto.hora_salida,
+            fecha_inicio=dto.fecha_inicio,
+            fecha_final=dto.fecha_final,
+            estado=dto.estado
         )

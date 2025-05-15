@@ -4,9 +4,11 @@ from periodos.domain.ports import PeriodoRepository
 from periodos.infrastructure.mapper.periodo_mapper import PeriodoMapper
 from periodos.infrastructure.mapper.periodo_mapper_impl import PeriodoMapperImpl
 from periodos.infrastructure.repositories import PeriodoRepositoryImpl
-from periodos.application.use_cases.use_cases import RegistrarPeriodo, BuscarPeriodos
+from periodos.application.use_cases.use_cases import RegistrarPeriodo, BuscarPeriodos, EliminarPeriodo
 from periodos.application.use_cases.impl.registrar_periodo_impl import RegistrarPeriodoImpl
 from periodos.application.use_cases.impl.buscar_periodos_impl import BuscarPeriodosImpl
+from periodos.application.use_cases.impl.eliminar_periodo_impl import EliminarPeriodoImpl
+
 
 class PeriodosInjectorModule(Module):
 
@@ -35,3 +37,8 @@ class PeriodosInjectorModule(Module):
             repository=self.provide_repository(),
             mapper=self.provide_mapper()
         )
+
+    @singleton
+    @provider
+    def provide_eliminar_periodo(self) -> EliminarPeriodo:
+        return EliminarPeriodoImpl(repository=self.provide_repository())
