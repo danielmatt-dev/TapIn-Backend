@@ -17,3 +17,8 @@ class BuscarPeriodos(ABC):
 class EliminarPeriodo(ABC):
     @abstractmethod
     def execute(self, id_periodo: str) -> bool: ...
+    
+class ConsultarPeriodo(ABC):
+    @abstractmethod
+    def execute(self, id_periodo: str) -> PeriodoDTO:
+        pass

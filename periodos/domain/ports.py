@@ -13,3 +13,6 @@ class PeriodoRepository(ABC):
 
     @abstractmethod
     def eliminar(self, id_periodo: str) -> bool: ...
+    
+    def obtener_por_id(self, id_periodo: str) -> Periodo | None:
+        pass

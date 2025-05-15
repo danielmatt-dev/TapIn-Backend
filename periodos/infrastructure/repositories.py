@@ -25,3 +25,10 @@ class PeriodoRepositoryImpl(PeriodoRepository):
     def eliminar(self, id_periodo: str) -> bool:
         deleted, _ = PeriodoModel.objects.filter(id_periodo=id_periodo).delete()
         return bool(deleted)
+
+    def obtener_por_id(self, id_periodo: str) -> Periodo | None:
+        try:
+            model = PeriodoModel.objects.get(id_periodo=id_periodo)
+            return self._mapper.to_domain(model)
+        except PeriodoModel.DoesNotExist:
+            return None
