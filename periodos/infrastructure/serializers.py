@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from bloques.infrastructure.serializers import BloqueSerializer
 
 class PeriodoSerializer(serializers.Serializer):
     id_periodo   = serializers.CharField()
@@ -8,3 +9,4 @@ class PeriodoSerializer(serializers.Serializer):
     fecha_inicio = serializers.DateField()
     fecha_final  = serializers.DateField()
     estado       = serializers.ChoiceField(choices=['Habilitado','Deshabilitado'])
+    bloques      = BloqueSerializer(many=True)   # <-- anidado

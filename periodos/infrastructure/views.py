@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+from periodos.application.use_cases.use_cases import ConsultarPeriodo
 from periodos.application.use_cases.use_cases import RegistrarPeriodo, BuscarPeriodos, EliminarPeriodo
 from periodos.domain.dtos import PeriodoDTO
 from periodos.infrastructure.serializers import PeriodoSerializer
@@ -35,3 +36,12 @@ def eliminar_periodo_view(request, uc: EliminarPeriodo):
         return Response({"error": "id_periodo es requerido"}, status=status.HTTP_400_BAD_REQUEST)
     success = uc.execute(id_periodo)
     return Response({"success": success}, status=status.HTTP_200_OK)
+
+@csrf_exempt
+@api_view(['GET'])
+def consultar_periodo_view(request, uc: ConsultarPeriodo, id_periodo: str):
+    try:
+        dto = uc.execute(id_periodo)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+    return Response(PeriodoSerializer(dto).data, status=status.HTTP_200_OK)

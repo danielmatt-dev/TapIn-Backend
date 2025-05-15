@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'inscripciones',
     'personal',
     'nfc',
+    'bloques',
 
     # OAuth2 provider (django-oauth-toolkit)
     'oauth2_provider',
