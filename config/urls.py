@@ -15,5 +15,5 @@ urlpatterns = [
     path(f'{api_path}/inscripcion/', include('inscripciones.infrastructure.urls')),
     path(f'{api_path}/periodos/', include('periodos.infrastructure.urls')),
     path(f'{api_path}/personal/', include('personal.infrastructure.urls')),
-
+    path(f'{api_path}/nfc/', include('nfc.infrastructure.urls')),
 ]

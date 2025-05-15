@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'periodos',
     'inscripciones',
     'personal',
+    'nfc',
 
     # OAuth2 provider (django-oauth-toolkit)
     'oauth2_provider',
