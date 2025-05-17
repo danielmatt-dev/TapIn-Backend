@@ -3,29 +3,50 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from inscripciones.application.use_cases.use_cases import (
-    NuevaInscripcion, BuscarInscripciones, ActualizarPeriodo, VaciarInscripciones
+    NuevaInscripcion, BuscarInscripciones, ActualizarPeriodo, ObtenerDatos
 )
 from inscripciones.domain.dtos import InscripcionDTO
 from inscripciones.infrastructure.serializers import InscripcionSerializer
+from inscripciones.infrastructure.serializers_dto import DatosCompletosSerializer
+
+# views.py (registrar_inscripcion_view)
+from periodos.infrastructure.repositories import PeriodoRepositoryImpl
+from alumnos.infrastructure.mapper.alumno_mapper_impl import AlumnoMapperImpl
+from periodos.infrastructure.mapper.periodo_mapper_impl import PeriodoMapperImpl
+from inscripciones.infrastructure.serializers import ActualizarPeriodoSerializer
+
+
+# inscripciones/infrastructure/views.py
 
 @csrf_exempt
 @api_view(['POST'])
 def registrar_inscripcion_view(request, use_case: NuevaInscripcion):
     ser = InscripcionSerializer(data=request.data)
-    if not ser.is_valid():
-        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+    ser.is_valid(raise_exception=True)
 
-    dto = InscripcionDTO(
+    alumno_model  = ser.validated_data.pop('alumno')
+    periodo_model = ser.validated_data.pop('periodo')
+
+    alumno  = AlumnoMapperImpl().to_domain(alumno_model)
+    periodo = PeriodoMapperImpl().to_domain(periodo_model)
+
+    dto = InscripcionDTO.nuevo(
         id_inscripcion=ser.validated_data['id_inscripcion'],
-        id_alumno=ser.validated_data['id_alumno'],
-        id_periodo=ser.validated_data['id_periodo'],
+        alumno=alumno,
+        periodo=periodo,
         fecha=ser.validated_data['fecha'],
-        grado=ser.validated_data.get('grado', ''),
-        grupo=ser.validated_data.get('grupo', ''),
+        grado=ser.validated_data.get('grado',''),
+        grupo=ser.validated_data.get('grupo',''),
         estado=ser.validated_data['estado']
     )
-    creado = use_case.execute(dto)
-    return Response(InscripcionSerializer(creado).data, status=status.HTTP_201_CREATED)
+
+    # ahora model_guardado es un InscripcionModel
+    model_guardado = use_case.execute(dto)
+
+    # lo pasamos al ModelSerializer y DRF encuentra .pk, .alumno.pk, .periodo.pk, etc.
+    return Response(InscripcionSerializer(model_guardado).data,
+                    status=status.HTTP_201_CREATED)
+
 
 @csrf_exempt
 @api_view(['GET'])
@@ -39,18 +60,27 @@ def buscar_inscripciones_view(request, use_case: BuscarInscripciones):
 @csrf_exempt
 @api_view(['PUT'])
 def actualizar_periodo_view(request, use_case: ActualizarPeriodo):
-    id_inscripcion = request.data.get('id_inscripcion')
-    id_periodo     = request.data.get('id_periodo')
-    if not id_inscripcion or not id_periodo:
+    ser = ActualizarPeriodoSerializer(data=request.data)
+    ser.is_valid(raise_exception=True)
+
+    id_insc  = ser.validated_data['id_inscripcion']
+    # ya nos devuelve un PeriodoModel
+    periodo_model = ser.validated_data['periodo']
+
+    # lo convertimos a dominio
+    periodo = PeriodoMapperImpl().to_domain(periodo_model)
+
+    success = use_case.execute(id_insc, periodo)
+    if not success:
         return Response(
-            {"error": "id_inscripcion e id_periodo son requeridos"},
+            {"error": "No se encontró la inscripción o no se actualizó."},
             status=status.HTTP_400_BAD_REQUEST
         )
-    success = use_case.execute(id_inscripcion, id_periodo)
-    return Response({"success": success}, status=status.HTTP_200_OK)
+    return Response({"success": True}, status=status.HTTP_200_OK)
 
 @csrf_exempt
-@api_view(['DELETE'])
-def vaciar_inscripciones_view(request, use_case: VaciarInscripciones):
-    success = use_case.execute()
-    return Response({"success": success}, status=status.HTTP_200_OK)
+@api_view(['GET'])
+def obtener_datos_view(request, use_case: ObtenerDatos):
+    datos_dto = use_case.execute()
+    ser       = DatosCompletosSerializer(datos_dto)
+    return Response(ser.data, status=status.HTTP_200_OK)

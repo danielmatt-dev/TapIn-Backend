@@ -19,3 +19,6 @@ class InscripcionRepository(ABC):
     @abstractmethod
     def vaciar(self) -> bool:
         pass
+    @abstractmethod
+    def buscar_todas(self) -> list[Inscripcion]:
+        ...

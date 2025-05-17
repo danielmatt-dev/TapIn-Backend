@@ -32,3 +32,6 @@ class PeriodoRepositoryImpl(PeriodoRepository):
             return self._mapper.to_domain(model)
         except PeriodoModel.DoesNotExist:
             return None
+    
+    def buscar_todos(self) -> list[PeriodoModel]:
+        return list(PeriodoModel.objects.all())
