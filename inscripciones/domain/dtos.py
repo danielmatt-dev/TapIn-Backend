@@ -1,11 +1,15 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import List
+
+from alumnos.domain.dtos import AlumnoDTO
+from periodos.domain.dtos import PeriodoDTO
 
 @dataclass
 class InscripcionDTO:
     id_inscripcion: str
-    id_alumno: str
-    id_periodo: str
+    alumno: AlumnoDTO
+    periodo: PeriodoDTO
     fecha: datetime
     grado: str
     grupo: str
@@ -14,18 +18,16 @@ class InscripcionDTO:
     @classmethod
     def nuevo(cls,
               id_inscripcion: str,
-              id_alumno: str,
-              id_periodo: str,
+              alumno: AlumnoDTO,
+              periodo: PeriodoDTO,
               fecha: datetime,
               grado: str = '',
               grupo: str = '',
               estado: str = 'Activo'):
-        return cls(
-            id_inscripcion=id_inscripcion,
-            id_alumno=id_alumno,
-            id_periodo=id_periodo,
-            fecha=fecha,
-            grado=grado,
-            grupo=grupo,
-            estado=estado
-        )
+        return cls(id_inscripcion, alumno, periodo, fecha, grado, grupo, estado)
+
+@dataclass
+class DatosCompletosDTO:
+    alumnos: List[AlumnoDTO]
+    inscripciones: List[InscripcionDTO]
+    periodos: List[PeriodoDTO]

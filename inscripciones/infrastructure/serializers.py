@@ -1,10 +1,26 @@
-from rest_framework import serializers
 
-class InscripcionSerializer(serializers.Serializer):
+    # inscripciones/infrastructure/serializers.py
+from rest_framework import serializers
+from inscripciones.infrastructure.inscripcion_model import InscripcionModel
+from alumnos.infrastructure.alumno_model import AlumnoModel
+from periodos.infrastructure.periodo_model import PeriodoModel
+
+class InscripcionSerializer(serializers.ModelSerializer):
+    alumno  = serializers.PrimaryKeyRelatedField(queryset=AlumnoModel.objects.all())
+    periodo = serializers.PrimaryKeyRelatedField(queryset=PeriodoModel.objects.all())
+
+    class Meta:
+        model  = InscripcionModel
+        fields = [
+            'id_inscripcion',
+            'alumno',
+            'periodo',
+            'fecha',
+            'grado',
+            'grupo',
+            'estado',
+        ]
+
+class ActualizarPeriodoSerializer(serializers.Serializer):
     id_inscripcion = serializers.CharField()
-    id_alumno      = serializers.CharField()
-    id_periodo     = serializers.CharField()
-    fecha          = serializers.DateTimeField()
-    grado          = serializers.CharField(allow_blank=True, required=False)
-    grupo          = serializers.CharField(allow_blank=True, required=False)
-    estado         = serializers.ChoiceField(choices=['Activo','Baja'])
+    periodo        = serializers.PrimaryKeyRelatedField(queryset=PeriodoModel.objects.all())

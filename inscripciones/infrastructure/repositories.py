@@ -11,21 +11,26 @@ class InscripcionRepositoryImpl(InscripcionRepository):
     def __init__(self, mapper: InscripcionMapper):
         self._mapper = mapper
 
-    def registrar(self, inscripcion: Inscripcion) -> Inscripcion:
+    def registrar(self, inscripcion: Inscripcion) -> InscripcionModel:
         model = self._mapper.to_model(inscripcion)
         model.save()
-        return self._mapper.to_domain(model)
+        return model
 
-    def buscar_por_alumno(self, id_alumno: str) -> List[Inscripcion]:
-        qs = InscripcionModel.objects.filter(id_alumno=id_alumno)
-        return [self._mapper.to_domain(m) for m in qs]
+    def buscar_por_alumno(self, id_alumno: str) -> List[InscripcionModel]:
+        return list(InscripcionModel.objects.filter(alumno_id=id_alumno))
 
     def actualizar_periodo(self, id_inscripcion: str, id_periodo: str) -> bool:
-        updated = InscripcionModel.objects\
-            .filter(id_inscripcion=id_inscripcion)\
-            .update(id_periodo=id_periodo)
+        updated = (
+            InscripcionModel.objects
+                .filter(pk=id_inscripcion)
+                .update(periodo_id=id_periodo)
+        )
         return updated == 1
 
     def vaciar(self) -> bool:
-        deleted, _ = InscripcionModel.objects.all().delete()
-        return bool(deleted)
+        deleted_count, _ = InscripcionModel.objects.all().delete()
+        return bool(deleted_count)
+    
+    def buscar_todas(self) -> list[InscripcionModel]:
+
+        return list(InscripcionModel.objects.all())

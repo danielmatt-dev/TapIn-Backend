@@ -62,3 +62,6 @@ class AlumnoRepositoryImpl(AlumnoRepository):
         'estado',
     ])
         return self._mapper.to_domain(model)
+
+    def buscar_todos(self) -> list[AlumnoModel]:
+        return list(AlumnoModel.objects.all())

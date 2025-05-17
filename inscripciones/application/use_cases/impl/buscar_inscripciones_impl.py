@@ -1,19 +1,14 @@
 from injector import inject
 from typing import List
 from inscripciones.application.use_cases.use_cases import BuscarInscripciones
-from inscripciones.domain.dtos import InscripcionDTO
 from inscripciones.domain.ports import InscripcionRepository
-from inscripciones.infrastructure.mapper.inscripcion_mapper import InscripcionMapper
+from inscripciones.infrastructure.inscripcion_model import InscripcionModel
 
 class BuscarInscripcionesImpl(BuscarInscripciones):
-
-    @inject
     def __init__(self,
-                 repository: InscripcionRepository,
-                 mapper: InscripcionMapper):
+                 repository: InscripcionRepository):
         self._repository = repository
-        self._mapper = mapper
 
-    def execute(self, id_alumno: str) -> List[InscripcionDTO]:
-        regs = self._repository.buscar_por_alumno(id_alumno)
-        return [self._mapper.to_dto(r) for r in regs]
+    def execute(self, id_alumno: str) -> List[InscripcionModel]:
+        # Devuelve directamente los modelos Django
+        return self._repository.buscar_por_alumno(id_alumno)
