@@ -9,14 +9,12 @@ from inscripciones.domain.dtos import InscripcionDTO
 from inscripciones.infrastructure.serializers import InscripcionSerializer
 from inscripciones.infrastructure.serializers_dto import DatosCompletosSerializer
 
-# views.py (registrar_inscripcion_view)
 from periodos.infrastructure.repositories import PeriodoRepositoryImpl
 from alumnos.infrastructure.mapper.alumno_mapper_impl import AlumnoMapperImpl
 from periodos.infrastructure.mapper.periodo_mapper_impl import PeriodoMapperImpl
 from inscripciones.infrastructure.serializers import ActualizarPeriodoSerializer
 
 
-# inscripciones/infrastructure/views.py
 
 @csrf_exempt
 @api_view(['POST'])
@@ -40,10 +38,8 @@ def registrar_inscripcion_view(request, use_case: NuevaInscripcion):
         estado=ser.validated_data['estado']
     )
 
-    # ahora model_guardado es un InscripcionModel
     model_guardado = use_case.execute(dto)
 
-    # lo pasamos al ModelSerializer y DRF encuentra .pk, .alumno.pk, .periodo.pk, etc.
     return Response(InscripcionSerializer(model_guardado).data,
                     status=status.HTTP_201_CREATED)
 
@@ -64,10 +60,8 @@ def actualizar_periodo_view(request, use_case: ActualizarPeriodo):
     ser.is_valid(raise_exception=True)
 
     id_insc  = ser.validated_data['id_inscripcion']
-    # ya nos devuelve un PeriodoModel
     periodo_model = ser.validated_data['periodo']
 
-    # lo convertimos a dominio
     periodo = PeriodoMapperImpl().to_domain(periodo_model)
 
     success = use_case.execute(id_insc, periodo)

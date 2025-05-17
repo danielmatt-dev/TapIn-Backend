@@ -1,5 +1,3 @@
-
-    # inscripciones/infrastructure/serializers.py
 from rest_framework import serializers
 from inscripciones.infrastructure.inscripcion_model import InscripcionModel
 from alumnos.infrastructure.alumno_model import AlumnoModel

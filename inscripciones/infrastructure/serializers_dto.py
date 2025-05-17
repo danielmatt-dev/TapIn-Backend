@@ -1,8 +1,5 @@
-# inscripciones/infrastructure/serializers_dto.py
 from rest_framework import serializers
 
-# Estos deben vivir junto a tus DTOs en cada módulo
-#-- alumnos
 class AlumnoDTOSerializer(serializers.Serializer):
     id_alumno            = serializers.CharField()
     nombre_completo      = serializers.CharField()
@@ -14,7 +11,6 @@ class AlumnoDTOSerializer(serializers.Serializer):
     es_silenciado        = serializers.BooleanField()
     estado               = serializers.CharField()
 
-#-- periodos
 class BloqueDTOSerializer(serializers.Serializer):
     id_bloque   = serializers.CharField()
     nombre      = serializers.CharField()
@@ -31,7 +27,6 @@ class PeriodoDTOSerializer(serializers.Serializer):
     estado       = serializers.CharField()
     bloques      = BloqueDTOSerializer(many=True)
 
-#-- inscripciones DTO
 class InscripcionDTOSerializer(serializers.Serializer):
     id_inscripcion = serializers.CharField()
     alumno         = AlumnoDTOSerializer()
@@ -41,7 +36,6 @@ class InscripcionDTOSerializer(serializers.Serializer):
     grupo          = serializers.CharField(allow_blank=True, required=False)
     estado         = serializers.CharField()
 
-#-- datos completos
 class DatosCompletosSerializer(serializers.Serializer):
     alumnos       = AlumnoDTOSerializer(many=True)
     inscripciones = InscripcionDTOSerializer(many=True)
