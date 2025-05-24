@@ -4,6 +4,7 @@ from personal.domain.ports import PersonalRepository
 from personal.infrastructure.personal_model import PersonalModel
 from personal.infrastructure.mapper.personal_mapper import PersonalMapper
 
+
 class PersonalRepositoryImpl(PersonalRepository):
 
     @inject
@@ -29,12 +30,18 @@ class PersonalRepositoryImpl(PersonalRepository):
 
     def actualizar(self, p: Personal) -> Personal:
         m = PersonalModel.objects.get(id_personal=p.id_personal)
-        m.nombre       = p.nombre
-        m.rol          = p.rol.value if hasattr(p.rol, 'value') else p.rol
+        m.nombre = p.nombre
+        m.rol = p.rol.value if hasattr(p.rol, 'value') else p.rol
         m.departamento = p.departamento
-        m.correo       = p.correo
-        m.estado       = p.estado
+        m.correo = p.correo
+        m.estado = p.estado
         m.save(update_fields=[
-            'nombre','rol','departamento','correo','estado'
+            'nombre', 'rol', 'departamento', 'correo', 'estado'
         ])
         return self._mapper.to_domain(m)
+
+    def obtener_por_correo(self, correo: str) -> Personal | None:
+        try:
+            return PersonalModel.objects.get(correo=correo, estado='Habilitado')
+        except PersonalModel.DoesNotExist:
+            return None
