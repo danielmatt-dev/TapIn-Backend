@@ -1,4 +1,4 @@
-from personal.domain.personal import Personal
+from personal.domain.personal import Personal, Rol
 from personal.domain.dtos import PersonalDTO
 from personal.infrastructure.personal_model import PersonalModel
 from personal.infrastructure.mapper.personal_mapper import PersonalMapper
@@ -9,7 +9,7 @@ class PersonalMapperImpl(PersonalMapper):
         return Personal(
             id_personal = model.id_personal,
             nombre      = model.nombre,
-            rol         = model.rol,
+            rol         = Rol(model.rol),
             departamento= model.departamento,
             correo      = model.correo,
             estado      = model.estado

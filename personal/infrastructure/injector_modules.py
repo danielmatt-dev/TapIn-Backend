@@ -1,5 +1,6 @@
 from injector import Module, singleton, provider
 
+from personal.application.use_cases.impl.buscar_todo_personal_impl import BuscarPersonalPorCorreoImpl
 from personal.application.use_cases.impl.registrar_personal_impl import RegistrarPersonalImpl
 from personal.application.use_cases.impl.eliminar_personal_impl import EliminarPersonalImpl
 from personal.application.use_cases.impl.consultar_estado_personal_impl import ConsultarEstadoPersonalImpl
@@ -12,7 +13,7 @@ from personal.infrastructure.repositories import PersonalRepositoryImpl
 
 from personal.application.use_cases.use_cases import (
     RegistrarPersonal, EliminarPersonal,
-    ConsultarEstadoPersonal, ActualizarPersonal
+    ConsultarEstadoPersonal, ActualizarPersonal, BuscarPersonalPorCorreo
 )
 
 class PersonalInjectorModule(Module):
@@ -52,6 +53,14 @@ class PersonalInjectorModule(Module):
     @provider
     def provide_actualizar(self) -> ActualizarPersonal:
         return ActualizarPersonalImpl(
+            repository=self.provide_repository(),
+            mapper=self.provide_mapper()
+        )
+
+    @singleton
+    @provider
+    def provide_buscar_personal_correo(self) -> BuscarPersonalPorCorreo:
+        return BuscarPersonalPorCorreoImpl(
             repository=self.provide_repository(),
             mapper=self.provide_mapper()
         )

@@ -21,3 +21,10 @@ class ActualizarPersonal(ABC):
     @abstractmethod
     def execute(self, dto: PersonalDTO) -> PersonalDTO:
         pass
+
+
+class BuscarPersonalPorCorreo(ABC):
+
+    @abstractmethod
+    def execute(self, correo: str) -> PersonalDTO:
+        pass
