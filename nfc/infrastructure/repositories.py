@@ -36,7 +36,7 @@ class NFCRepositoryImpl(NFCRepository):
         m = NFCModel.objects.filter(id_nfc=id_nfc).first()
         if not m:
             return None
-        alumno = self._alumno_repo.obtener_por_id(m.id_alumno)
+        alumno = self._alumno_repo.obtener_por_id(m.id_nfc)
         return NFCDTO(
             id_nfc=m.id_nfc,
             identificador=m.identificador,
@@ -47,7 +47,7 @@ class NFCRepositoryImpl(NFCRepository):
     def obtener_todos(self) -> List[NFCDTO]:
         resultados = []
         for m in NFCModel.objects.all():
-            alumno = self._alumno_repo.obtener_por_id(m.id_alumno)
+            alumno = self._alumno_repo.obtener_por_id(m.id_nfc)
             resultados.append(NFCDTO(
                 id_nfc=m.id_nfc,
                 identificador=m.identificador,

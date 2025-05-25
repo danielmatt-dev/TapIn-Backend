@@ -3,7 +3,7 @@ from datetime import date, time
 
 @dataclass
 class Asistencia:
-    id_registro_asistencia: int
+    id_registro_asistencia: int | None
     id_alumno: str
     fecha: date
     hora: time
