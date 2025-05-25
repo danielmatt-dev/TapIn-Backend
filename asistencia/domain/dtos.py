@@ -4,7 +4,8 @@ from datetime import date, time
 @dataclass
 class AsistenciaDTO:
     id_registro_asistencia: int | None
-    id_alumno: str
+    id_nfc: str | None
+    correo: str | None
     fecha: date
     hora: time
     tipo_registro: str
@@ -14,6 +15,7 @@ class AsistenciaDTO:
     @classmethod
     def nuevo(cls,
               id_alumno: str,
+              correo: str,
               fecha: date,
               hora: time,
               tipo_registro: str,
@@ -21,7 +23,8 @@ class AsistenciaDTO:
               estado: str):
         return cls(
             id_registro_asistencia=None,
-            id_alumno=id_alumno,
+            id_nfc=id_alumno,
+            correo=correo,
             fecha=fecha,
             hora=hora,
             tipo_registro=tipo_registro,

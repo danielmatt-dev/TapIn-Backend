@@ -1,5 +1,7 @@
-from injector import Module, singleton, provider
+from injector import Module, singleton, provider, Injector
 
+from alertas.domain.alerta_port import AlertaRepository
+from alertas.infraestructure.alerta_repository import AlertaRepositoryImpl
 from asistencia.infrastructure.mapper.asistencia_mapper import AsistenciaMapper
 from asistencia.infrastructure.mapper.asistencia_mapper_impl import AsistenciaMapperImpl
 from asistencia.application.use_cases.impl.registrar_asistencia_impl import RegistrarAsistenciaImpl
@@ -14,6 +16,7 @@ from asistencia.application.use_cases.use_cases import (
 )
 from asistencia.domain.ports import AsistenciaRepository
 from asistencia.infrastructure.repositories import AsistenciaRepositoryImpl
+from nfc.domain.ports import NFCRepository
 
 
 class AsistenciaInjectorModule(Module):
@@ -29,10 +32,19 @@ class AsistenciaInjectorModule(Module):
 
     @singleton
     @provider
+    def provide_alerta_repository(self) -> AlertaRepository:
+        return AlertaRepositoryImpl()
+
+    @singleton
+    @provider
     def provide_registrar_asistencia(self) -> RegistrarAsistencia:
+        injector = Injector([NFCRepository])
+
         return RegistrarAsistenciaImpl(
             repository=self.provide_asistencia_repository(),
-            mapper=self.provide_mapper()
+            mapper=self.provide_mapper(),
+            alerta_repository=self.provide_alerta_repository(),
+            nfc_repository=injector.get(NFCRepository)
         )
 
     @singleton

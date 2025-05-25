@@ -1,4 +1,6 @@
 from injector import inject
+from rest_framework.exceptions import NotFound
+
 from alumnos.application.use_cases.use_cases import ActualizarAlumno
 from alumnos.domain.dtos import AlumnoDTO
 from alumnos.domain.ports import AlumnoRepository
@@ -16,7 +18,7 @@ class ActualizarAlumnoImpl(ActualizarAlumno):
     def execute(self, dto: AlumnoDTO) -> AlumnoDTO:
         entidad = self._repository.obtener_por_id(dto.id_alumno)
         if entidad is None:
-            raise Exception(f"Alumno con id {dto.id_alumno} no encontrado")
+            raise NotFound(detail=f"Alumno con id {dto.id_alumno} no encontrado")
 
         entidad.nombre_completo       = dto.nombre_completo
         entidad.curp                  = dto.curp
