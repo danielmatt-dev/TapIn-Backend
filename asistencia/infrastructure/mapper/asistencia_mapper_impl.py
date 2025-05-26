@@ -37,5 +37,6 @@ class AsistenciaMapperImpl(AsistenciaMapper):
             hora=domain.hora,
             tipo_registro=domain.tipo_registro,
             tipo_acceso=domain.tipo_acceso,
-            estado=domain.estado
+            estado=domain.estado,
+            correo=None
         )

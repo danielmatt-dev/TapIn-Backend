@@ -2,6 +2,8 @@ from injector import Module, singleton, provider, Injector
 
 from alertas.domain.alerta_port import AlertaRepository
 from alertas.infraestructure.alerta_repository import AlertaRepositoryImpl
+from alumnos.domain.ports import AlumnoRepository
+from alumnos.infrastructure.injector_modules import AlumnoInjectorModule
 from asistencia.infrastructure.mapper.asistencia_mapper import AsistenciaMapper
 from asistencia.infrastructure.mapper.asistencia_mapper_impl import AsistenciaMapperImpl
 from asistencia.application.use_cases.impl.registrar_asistencia_impl import RegistrarAsistenciaImpl
@@ -17,6 +19,7 @@ from asistencia.application.use_cases.use_cases import (
 from asistencia.domain.ports import AsistenciaRepository
 from asistencia.infrastructure.repositories import AsistenciaRepositoryImpl
 from nfc.domain.ports import NFCRepository
+from nfc.infrastructure.injector_modules import NFCInjectorModule
 
 
 class AsistenciaInjectorModule(Module):
@@ -38,7 +41,7 @@ class AsistenciaInjectorModule(Module):
     @singleton
     @provider
     def provide_registrar_asistencia(self) -> RegistrarAsistencia:
-        injector = Injector([NFCRepository])
+        injector = Injector([NFCInjectorModule])
 
         return RegistrarAsistenciaImpl(
             repository=self.provide_asistencia_repository(),
@@ -63,7 +66,9 @@ class AsistenciaInjectorModule(Module):
     @singleton
     @provider
     def provide_consultar_por_periodo(self) -> ConsultarAsistenciasDelPeriodo:
+        injector = Injector([AlumnoInjectorModule])
+
         return ConsultarAsistenciasDelPeriodoImpl(
             repository=self.provide_asistencia_repository(),
-            mapper=self.provide_mapper()
+            alumno_repository=injector.get(AlumnoRepository)
         )

@@ -16,38 +16,38 @@ from alumnos.infrastructure.views import (
     consultar_estado_alumnos_view,
     actualizar_alumno_view
 )
-from .injector_modules import InjectorModule
+from .injector_modules import AlumnoInjectorModule
 
 
 @csrf_exempt
 def registrar_alumno_view_factory(request) -> Response:
-    injector = Injector([InjectorModule])
+    injector = Injector([AlumnoInjectorModule])
     registrar_alumno_use_case = injector.get(RegistrarAlumno)
     return registrar_alumno_view(request, registrar_alumno_use_case)
 
 
 @csrf_exempt
 def silenciar_alumno_view_factory(request) -> Response:
-    injector = Injector([InjectorModule])
+    injector = Injector([AlumnoInjectorModule])
     silenciar_alumno_use_case = injector.get(SilenciarAlumno)
     return silenciar_alumno_view(request, silenciar_alumno_use_case)
 
 
 @csrf_exempt
 def eliminar_alumno_view_factory(request) -> Response:
-    injector = Injector([InjectorModule])
+    injector = Injector([AlumnoInjectorModule])
     eliminar_alumno_use_case = injector.get(EliminarAlumno)
     return eliminar_alumno_view(request, eliminar_alumno_use_case)
 
 
 @csrf_exempt
 def consultar_estado_alumnos_view_factory(request) -> Response:
-    injector = Injector([InjectorModule])
+    injector = Injector([AlumnoInjectorModule])
     consultar_estado_alumnos_use_case = injector.get(ConsultarEstadoAlumnos)
     return consultar_estado_alumnos_view(request, consultar_estado_alumnos_use_case)
 
 @csrf_exempt
 def actualizar_alumno_view_factory(request) -> Response:
-    injector = Injector([InjectorModule])
+    injector = Injector([AlumnoInjectorModule])
     use_case = injector.get(ActualizarAlumno)
     return actualizar_alumno_view(request, use_case)

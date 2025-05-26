@@ -1,5 +1,6 @@
 from injector import Module, singleton, provider
 
+from alertas.domain.generar_alertas import GenerarAlertas
 from alumnos.application.use_cases.impl.registrar_alumno_impl import RegistrarAlumnoImpl
 from alumnos.domain.ports import AlumnoRepository
 from alumnos.infrastructure.mapper.alumno_mapper import AlumnoMapper
@@ -12,7 +13,7 @@ from alumnos.application.use_cases.impl.consultar_estado_alumnos_impl import Con
 from alumnos.application.use_cases.impl.actualizar_alumnos_impl import ActualizarAlumnoImpl
 
 
-class InjectorModule(Module):
+class AlumnoInjectorModule(Module):
 
     @singleton
     @provider
@@ -46,7 +47,12 @@ class InjectorModule(Module):
         repository=self.provide_alumno_repository(),
         mapper=self.provide_mapper()
     )
-    
+
+    @singleton
+    @provider
+    def provide_generar_alertas(self) -> GenerarAlertas:
+        return GenerarAlertas()
+
     @singleton
     @provider
     def provide_actualizar_alumno(self) -> ActualizarAlumno:

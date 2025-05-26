@@ -2,7 +2,8 @@ from abc import ABC, abstractmethod
 from datetime import date
 from typing import List
 
-from asistencia.domain.dtos import AsistenciaDTO
+from asistencia.domain.dtos import AsistenciaDTO, AsistenciasDTO, AsistenciaResponse
+
 
 class RegistrarAsistencia(ABC):
     @abstractmethod
@@ -21,5 +22,5 @@ class ConsultarAsistenciasDelDia(ABC):
 
 class ConsultarAsistenciasDelPeriodo(ABC):
     @abstractmethod
-    def execute(self, fecha_inicio: date, fecha_fin: date) -> List[AsistenciaDTO]:
+    def execute(self, fecha_inicio: date, fecha_fin: date) -> List[AsistenciaResponse]:
         pass

@@ -3,6 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+from alertas.domain.alerta import AlertaSerializer
+from alertas.domain.generar_alertas import GenerarAlertas
 from asistencia.application.use_cases.use_cases import (
     RegistrarAsistencia,
     BuscarAsistencias,
@@ -10,7 +12,8 @@ from asistencia.application.use_cases.use_cases import (
     ConsultarAsistenciasDelPeriodo
 )
 from asistencia.domain.dtos import AsistenciaDTO
-from asistencia.infrastructure.serializers import AsistenciaSerializer
+from asistencia.infrastructure.serializers import AsistenciaSerializer, AsistenciaResponseSerializer
+from datetime import datetime
 
 @csrf_exempt
 @api_view(['POST'])
@@ -44,7 +47,7 @@ def buscar_asistencias_view(request, buscar_uc: BuscarAsistencias):
 @csrf_exempt
 @api_view(['GET'])
 def consultar_por_dia_view(request, use_case: ConsultarAsistenciasDelDia):
-    from datetime import datetime
+
     qs = request.query_params.get('fecha')
     try:
         fecha = datetime.fromisoformat(qs).date()
@@ -55,14 +58,21 @@ def consultar_por_dia_view(request, use_case: ConsultarAsistenciasDelDia):
 
 @csrf_exempt
 @api_view(['GET'])
-def consultar_por_periodo_view(request, use_case: ConsultarAsistenciasDelPeriodo):
-    from datetime import datetime
+def consultar_por_periodo_view(request, consultar_asistencias: ConsultarAsistenciasDelPeriodo,
+                               generar_alertas: GenerarAlertas):
+
     fi = request.query_params.get('fecha_inicio')
     ff = request.query_params.get('fecha_fin')
+
     try:
         inicio = datetime.fromisoformat(fi).date()
         fin    = datetime.fromisoformat(ff).date()
     except:
         return Response({"error":"fechas inválidas"}, status=status.HTTP_400_BAD_REQUEST)
-    regs = use_case.execute(inicio, fin)
-    return Response(AsistenciaSerializer(regs, many=True).data, status=status.HTTP_200_OK)
+
+    asistencias = consultar_asistencias.execute(inicio, fin)
+    alertas = generar_alertas.execute(asistencias)
+    asis_serial = AsistenciaResponseSerializer(asistencias, many=True).data
+    aler_serial = AlertaSerializer(alertas, many=True).data
+
+    return Response({ 'asistencias': asis_serial, 'alertas': aler_serial }, status=status.HTTP_200_OK)

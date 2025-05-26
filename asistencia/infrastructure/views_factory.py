@@ -2,6 +2,8 @@ from injector import Injector
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 
+from alertas.domain.generar_alertas import GenerarAlertas
+from alumnos.infrastructure.injector_modules import AlumnoInjectorModule
 from asistencia.application.use_cases.use_cases import (
     RegistrarAsistencia,
     BuscarAsistencias,
@@ -38,5 +40,7 @@ def consultar_por_dia_view_factory(request) -> Response:
 @csrf_exempt
 def consultar_por_periodo_view_factory(request) -> Response:
     inj = Injector([AsistenciaInjectorModule])
+    inj_alumno = Injector([AlumnoInjectorModule])
     uc  = inj.get(ConsultarAsistenciasDelPeriodo)
-    return consultar_por_periodo_view(request, uc)
+    uc2 = inj_alumno.get(GenerarAlertas)
+    return consultar_por_periodo_view(request, uc, uc2)

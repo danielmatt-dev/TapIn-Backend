@@ -1,5 +1,12 @@
 from dataclasses import dataclass
 from datetime import date, time
+from typing import List
+
+from alertas.domain.alerta import Alerta
+from alertas.infraestructure.alerta_model import AlertaModel
+from alumnos.domain.dtos import AlumnoDTO
+from inscripciones.domain.dtos import InscripcionDTO
+
 
 @dataclass
 class AsistenciaDTO:
@@ -31,3 +38,20 @@ class AsistenciaDTO:
             tipo_acceso=tipo_acceso,
             estado=estado,
         )
+
+
+@dataclass
+class AsistenciaResponse:
+    id_registro_asistencia: int | None
+    alumno: str
+    fecha: date
+    hora: time
+    tipo_registro: str
+    tipo_acceso: str
+    estado: str
+
+
+@dataclass
+class AsistenciasDTO:
+    asistencias: List[AsistenciaResponse]
+    alerta: List[Alerta]
