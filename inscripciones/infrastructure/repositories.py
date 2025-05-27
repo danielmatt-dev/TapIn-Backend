@@ -16,8 +16,8 @@ class InscripcionRepositoryImpl(InscripcionRepository):
         model.save()
         return model
 
-    def buscar_por_alumno(self, id_alumno: str) -> List[InscripcionModel]:
-        return list(InscripcionModel.objects.filter(alumno_id=id_alumno))
+    def buscar_por_alumno(self, id_alumno: str) -> InscripcionModel:
+        return InscripcionModel.objects.filter(alumno_id=id_alumno).first()
 
     def actualizar_periodo(self, id_inscripcion: str, id_periodo: str) -> bool:
         updated = (

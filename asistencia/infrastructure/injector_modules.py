@@ -18,6 +18,8 @@ from asistencia.application.use_cases.use_cases import (
 )
 from asistencia.domain.ports import AsistenciaRepository
 from asistencia.infrastructure.repositories import AsistenciaRepositoryImpl
+from inscripciones.domain.ports import InscripcionRepository
+from inscripciones.infrastructure.injector_modules import InscripcionesInjectorModule
 from nfc.domain.ports import NFCRepository
 from nfc.infrastructure.injector_modules import NFCInjectorModule
 
@@ -67,8 +69,10 @@ class AsistenciaInjectorModule(Module):
     @provider
     def provide_consultar_por_periodo(self) -> ConsultarAsistenciasDelPeriodo:
         injector = Injector([AlumnoInjectorModule])
+        injector_ins = Injector([InscripcionesInjectorModule])
 
         return ConsultarAsistenciasDelPeriodoImpl(
             repository=self.provide_asistencia_repository(),
-            alumno_repository=injector.get(AlumnoRepository)
+            alumno_repository=injector.get(AlumnoRepository),
+            inscripcion_repository=injector_ins.get(InscripcionRepository)
         )

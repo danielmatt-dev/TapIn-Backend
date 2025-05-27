@@ -44,6 +44,9 @@ class AsistenciaDTO:
 class AsistenciaResponse:
     id_registro_asistencia: int | None
     alumno: str
+    correo: str
+    grado: str
+    grupo: str
     fecha: date
     hora: time
     tipo_registro: str

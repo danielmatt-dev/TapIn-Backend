@@ -13,6 +13,9 @@ class AsistenciaSerializer(serializers.Serializer):
 class AsistenciaResponseSerializer(serializers.Serializer):
     id_registro_asistencia = serializers.IntegerField(allow_null=True, read_only=True)
     alumno                  = serializers.CharField()
+    correo                  = serializers.EmailField()
+    grado                   = serializers.CharField()
+    grupo                   = serializers.CharField()
     fecha                   = serializers.DateField()
     hora                    = serializers.TimeField()
     tipo_registro           = serializers.ChoiceField(
