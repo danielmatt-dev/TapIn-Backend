@@ -9,7 +9,7 @@ class InscripcionRepository(ABC):
         pass
 
     @abstractmethod
-    def buscar_por_alumno(self, id_alumno: str) -> List[Inscripcion]:
+    def buscar_por_alumno(self, id_alumno: str) -> Inscripcion:
         pass
 
     @abstractmethod
