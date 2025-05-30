@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 @dataclass
 class Alerta:
-    id_alerta: int
+    id_alerta: int | None
     titulo: str
     descripcion: str
     tipo: str

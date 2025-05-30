@@ -11,3 +11,10 @@ class AlumnoSerializer(serializers.Serializer):
     telefono_tutor = serializers.CharField()
     es_silenciado = serializers.BooleanField(read_only=True)
     estado = serializers.ChoiceField(choices=['Activo','Baja'])  
+
+
+class AlumnoResponseDTOSerializer(serializers.Serializer):
+    id_nfc = serializers.CharField()
+    nombre_completo = serializers.CharField()
+    correo_institucional = serializers.EmailField()
+    estado = serializers.ChoiceField(choices=['Habilitado', 'Deshabilitado'])

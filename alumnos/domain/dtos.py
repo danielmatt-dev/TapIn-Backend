@@ -12,7 +12,7 @@ class AlumnoDTO:
     fecha_nacimiento: date
     telefono_tutor: str
     es_silenciado: bool
-    estado: str   
+    estado: str
 
     @classmethod
     def from_empty(cls):
@@ -24,5 +24,14 @@ class AlumnoDTO:
             correo_institucional='',
             fecha_nacimiento=date(1990, 1, 1),
             telefono_tutor='',
-            estado='Activo'   
+            estado='Activo',
+            es_silenciado=cls.es_silenciado
         )
+
+
+@dataclass
+class AlumnoResponseDTO:
+    id_nfc: str
+    nombre_completo: str
+    correo_institucional: str
+    estado: str

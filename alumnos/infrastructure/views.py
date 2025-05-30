@@ -6,7 +6,7 @@ from rest_framework import status
 
 from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, ConsultarEstadoAlumnos, ActualizarAlumno
 from alumnos.domain.dtos import AlumnoDTO
-from alumnos.infrastructure.serializers import AlumnoSerializer
+from alumnos.infrastructure.serializers import AlumnoSerializer, AlumnoResponseDTOSerializer
 
 
 @csrf_exempt
@@ -68,7 +68,7 @@ def eliminar_alumno_view(request, eliminar_alumno: EliminarAlumno):
 @api_view(['GET'])
 def consultar_estado_alumnos_view(request, consultar_estado_alumnos: ConsultarEstadoAlumnos):
     alumnos = consultar_estado_alumnos.execute()
-    serializer = AlumnoSerializer(alumnos, many=True)
+    serializer = AlumnoResponseDTOSerializer(alumnos, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
 
