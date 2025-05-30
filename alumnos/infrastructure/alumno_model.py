@@ -15,3 +15,4 @@ class AlumnoModel(models.Model):
     class Meta:
         managed = False
         db_table = 'alumnos'
+        app_label = 'alumnos'

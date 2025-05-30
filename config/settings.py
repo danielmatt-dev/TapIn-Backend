@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'nfc',
     'bloques',
     'alertas',
+    'asistencia.infrastructure',
+    'alertas.infraestructure',
 
     # OAuth2 provider (django-oauth-toolkit)
     'oauth2_provider',

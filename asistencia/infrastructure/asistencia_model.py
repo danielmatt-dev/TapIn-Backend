@@ -12,3 +12,4 @@ class AsistenciaModel(models.Model):
     class Meta:
         managed = False
         db_table = 'registro_asistencias'
+        app_label = 'registro_asistencias'
