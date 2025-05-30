@@ -1,4 +1,4 @@
-from injector import Module, singleton, provider
+from injector import Module, singleton, provider, Injector
 
 from alertas.domain.generar_alertas import GenerarAlertas
 from alumnos.application.use_cases.impl.registrar_alumno_impl import RegistrarAlumnoImpl
@@ -6,11 +6,14 @@ from alumnos.domain.ports import AlumnoRepository
 from alumnos.infrastructure.mapper.alumno_mapper import AlumnoMapper
 from alumnos.infrastructure.mapper.alumno_mapper_impl import AlumnoMapperImpl
 from alumnos.infrastructure.repositories import AlumnoRepositoryImpl
-from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, ConsultarEstadoAlumnos, ActualizarAlumno
+from alumnos.application.use_cases.use_cases import RegistrarAlumno, SilenciarAlumno, EliminarAlumno, \
+    ConsultarEstadoAlumnos, ActualizarAlumno
 from alumnos.application.use_cases.impl.silenciar_alumno_impl import SilenciarAlumnoImpl
 from alumnos.application.use_cases.impl.eliminar_alumno_impl import EliminarAlumnoImpl
 from alumnos.application.use_cases.impl.consultar_estado_alumnos_impl import ConsultarEstadoAlumnosImpl
 from alumnos.application.use_cases.impl.actualizar_alumnos_impl import ActualizarAlumnoImpl
+from nfc.domain.ports import NFCRepository
+from nfc.infrastructure.injector_modules import NFCInjectorModule
 
 
 class AlumnoInjectorModule(Module):
@@ -43,10 +46,13 @@ class AlumnoInjectorModule(Module):
     @singleton
     @provider
     def provide_consultar_estado_alumnos(self) -> ConsultarEstadoAlumnos:
+        injector = Injector([NFCInjectorModule])
+
         return ConsultarEstadoAlumnosImpl(
-        repository=self.provide_alumno_repository(),
-        mapper=self.provide_mapper()
-    )
+            repository=self.provide_alumno_repository(),
+            nfc_repository=injector.get(NFCRepository),
+            mapper=self.provide_mapper()
+        )
 
     @singleton
     @provider

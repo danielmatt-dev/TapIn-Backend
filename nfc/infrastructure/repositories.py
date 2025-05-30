@@ -51,6 +51,25 @@ class NFCRepositoryImpl(NFCRepository):
             estado=m.estado
         )
 
+    def obtener_por_id_alumno(self, id_alumno: str) -> Optional[NFC]:
+
+        m = NFCModel.objects.filter(id_alumno=id_alumno).first()
+
+        if not m:
+            return None
+        alumno = self._alumno_repo.obtener_por_id(m.id_alumno)
+
+        if not alumno:
+            return None
+
+        return NFC(
+            id_nfc=m.id_nfc,
+            identificador=m.identificador,
+            alumno=alumno,
+            estado=m.estado
+        )
+
+
     def obtener_todos(self) -> List[NFCDTO]:
         resultados = []
         for m in NFCModel.objects.all():

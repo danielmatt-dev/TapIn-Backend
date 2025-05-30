@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 from nfc.domain.nfc import NFC
 
+
 class NFCRepository(ABC):
     @abstractmethod
     def registrar(self, entidad: NFC) -> NFC: ...
@@ -9,6 +10,9 @@ class NFCRepository(ABC):
     def eliminar(self, id_nfc: str) -> bool: ...
     @abstractmethod
     def obtener_por_id(self, id_nfc: str) -> Optional[NFC]: ...
+
+    @abstractmethod
+    def obtener_por_id_alumno(self, id_alumno: str) -> Optional[NFC]: ...
     @abstractmethod
     def obtener_todos(self) -> List[NFC]: ...
     @abstractmethod

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from alumnos.domain.dtos import AlumnoDTO
+from alumnos.domain.dtos import AlumnoDTO, AlumnoResponseDTO
 
 
 class RegistrarAlumno(ABC):
@@ -26,7 +26,7 @@ class EliminarAlumno(ABC):
 class ConsultarEstadoAlumnos(ABC):
 
     @abstractmethod
-    def execute(self) -> List[AlumnoDTO]:
+    def execute(self) -> List[AlumnoResponseDTO]:
         pass
 
 class ActualizarAlumno(ABC):
