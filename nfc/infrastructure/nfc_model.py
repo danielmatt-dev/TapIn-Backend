@@ -9,3 +9,4 @@ class NFCModel(models.Model):
     class Meta:
         managed = False
         db_table = 'nfc'
+        app_label = 'nfc'

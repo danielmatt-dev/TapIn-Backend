@@ -10,3 +10,4 @@ class BloqueModel(models.Model):
     class Meta:
         managed = False
         db_table = 'bloques'
+        app_label = 'bloques'

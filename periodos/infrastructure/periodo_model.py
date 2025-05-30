@@ -12,3 +12,4 @@ class PeriodoModel(models.Model):
     class Meta:
         managed = False
         db_table = 'periodos'
+        app_label = 'periodos'

@@ -18,3 +18,4 @@ class InscripcionModel(models.Model):
     class Meta:
         managed = False
         db_table = 'inscripciones'
+        app_label = 'inscripciones'
