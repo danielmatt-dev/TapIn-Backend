@@ -44,12 +44,14 @@ class AsistenciaInjectorModule(Module):
     @provider
     def provide_registrar_asistencia(self) -> RegistrarAsistencia:
         injector = Injector([NFCInjectorModule])
+        alu_injector = Injector([AlumnoInjectorModule])
 
         return RegistrarAsistenciaImpl(
             repository=self.provide_asistencia_repository(),
             mapper=self.provide_mapper(),
             alerta_repository=self.provide_alerta_repository(),
-            nfc_repository=injector.get(NFCRepository)
+            nfc_repository=injector.get(NFCRepository),
+            alumno_repository=alu_injector.get(AlumnoRepository)
         )
 
     @singleton

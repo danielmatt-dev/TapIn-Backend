@@ -23,12 +23,13 @@ def registrar_asistencia_view(request, use_case: RegistrarAsistencia):
         return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
     dto = AsistenciaDTO.nuevo(
-        id_alumno=ser.validated_data['id_alumno'],
+        id_nfc=ser.validated_data.get('id_nfc'),
+        correo=ser.validated_data.get('correo'),
         fecha=ser.validated_data['fecha'],
         hora=ser.validated_data['hora'],
         tipo_registro=ser.validated_data['tipo_registro'],
         tipo_acceso=ser.validated_data['tipo_acceso'],
-        estado=ser.validated_data['estado'],
+        estado=ser.validated_data['estado']
     )
     creado = use_case.execute(dto)
     return Response(AsistenciaSerializer(creado).data, status=status.HTTP_201_CREATED)
