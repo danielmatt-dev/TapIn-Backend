@@ -14,5 +14,5 @@ class AsistenciaMapper(ABC):
         pass
 
     @abstractmethod
-    def to_dto(self, domain: Asistencia) -> AsistenciaDTO:
+    def to_dto(self, domain: Asistencia, correo: str) -> AsistenciaDTO:
         pass

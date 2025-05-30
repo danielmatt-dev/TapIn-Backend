@@ -29,7 +29,7 @@ class AsistenciaMapperImpl(AsistenciaMapper):
             m.id_registro_asistencia = domain.id_registro_asistencia
         return m
 
-    def to_dto(self, domain: Asistencia) -> AsistenciaDTO:
+    def to_dto(self, domain: Asistencia, correo: str) -> AsistenciaDTO:
         return AsistenciaDTO(
             id_registro_asistencia=domain.id_registro_asistencia,
             id_nfc=domain.id_alumno,
@@ -38,5 +38,5 @@ class AsistenciaMapperImpl(AsistenciaMapper):
             tipo_registro=domain.tipo_registro,
             tipo_acceso=domain.tipo_acceso,
             estado=domain.estado,
-            correo=None
+            correo=correo
         )

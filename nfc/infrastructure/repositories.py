@@ -1,6 +1,7 @@
 from injector import inject
 from typing import List, Optional
 from nfc.domain.dtos import NFCDTO
+from nfc.domain.nfc import NFC
 from nfc.domain.ports import NFCRepository
 from nfc.infrastructure.nfc_model import NFCModel
 from nfc.infrastructure.mapper.nfc_mapper import NFCMapper
@@ -32,12 +33,18 @@ class NFCRepositoryImpl(NFCRepository):
         deleted, _ = NFCModel.objects.filter(id_nfc=id_nfc).delete()
         return bool(deleted)
 
-    def obtener_por_id(self, id_nfc: int) -> Optional[NFCDTO]:
-        m = NFCModel.objects.filter(id_nfc=id_nfc).first()
+    def obtener_por_id(self, id_nfc: int) -> Optional[NFC]:
+
+        m = NFCModel.objects.filter(identificador=id_nfc).first()
+
         if not m:
             return None
-        alumno = self._alumno_repo.obtener_por_id(m.id_nfc)
-        return NFCDTO(
+        alumno = self._alumno_repo.obtener_por_id(m.id_alumno)
+
+        if not alumno:
+            return None
+
+        return NFC(
             id_nfc=m.id_nfc,
             identificador=m.identificador,
             alumno=alumno,

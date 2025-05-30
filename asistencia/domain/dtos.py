@@ -21,7 +21,7 @@ class AsistenciaDTO:
 
     @classmethod
     def nuevo(cls,
-              id_alumno: str,
+              id_nfc: str,
               correo: str,
               fecha: date,
               hora: time,
@@ -30,7 +30,7 @@ class AsistenciaDTO:
               estado: str):
         return cls(
             id_registro_asistencia=None,
-            id_nfc=id_alumno,
+            id_nfc=id_nfc,
             correo=correo,
             fecha=fecha,
             hora=hora,
