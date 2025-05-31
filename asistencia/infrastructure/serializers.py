@@ -2,11 +2,11 @@ from rest_framework import serializers
 
 class AsistenciaSerializer(serializers.Serializer):
     id_registro_asistencia = serializers.IntegerField(read_only=True, required=False)
-    id_nfc              = serializers.CharField(required=False)
+    id_nfc              = serializers.CharField(required=False,  allow_null=True, allow_blank=True)
     correo                  = serializers.EmailField(
                                 required=False,
                                 allow_null=True,
-                                allow_blank=True,
+                                allow_blank=True
                             )
     fecha                  = serializers.DateField()
     hora                   = serializers.TimeField()
